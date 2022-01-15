@@ -44,5 +44,6 @@
    ```bash
    electron-builder
    ```
+   你可以在 `build` 文件夹内看到编译结果。
 
    
