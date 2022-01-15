@@ -26,12 +26,11 @@ jobs:
         cache: 'npm'
     - run: npm install -g electron-builder
     - run: npm run build
-    - run: tree
+    - run: ls ./build
     - name: Upload file
       uses: actions/upload-artifact@v2
       with:
-        name: build
+        name: Bamboo Tool Nightly Version
         path: |
-          build/*7z # 7z
-          build/*exe # window 安装包
+          ./build/*.*
 
