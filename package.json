@@ -57,7 +57,7 @@
             "include": "installer.nsh"
         }
     },
-    "dependencies": {
+    "devDependencies": {
         "express": "^4.17.2",
         "fluent-ffmpeg": "^2.1.2",
         "fs": "^0.0.1-security",
