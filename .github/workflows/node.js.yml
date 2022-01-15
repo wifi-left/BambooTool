@@ -27,7 +27,7 @@ jobs:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
     - run: npm install electron-builder
-    - run: npm run build --if-present
+    - run: electron-builder
     
     - name: Upload file
       uses: actions/upload-artifact@v2

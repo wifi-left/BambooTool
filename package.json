@@ -4,8 +4,7 @@
     "description": "Bamboo Tool",
     "main": "index.js",
     "scripts": {
-        "test": "electron .",
-        "build": "electron-builder"
+        "test": "electron ."
     },
     "author": "Gamom",
     "license": "ISC",
@@ -57,7 +56,7 @@
             "include": "installer.nsh"
         }
     },
-    "devDependencies": {
+    "dependencies": {
         "express": "^4.17.2",
         "fluent-ffmpeg": "^2.1.2",
         "fs": "^0.0.1-security",
