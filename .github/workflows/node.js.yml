@@ -11,11 +11,10 @@ on:
 jobs:
   build:
 
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     strategy:
       matrix:
         node-version: [16.9.1]
-        os: [macos-latest, ubuntu-latest, windows-latest]
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
     steps:
