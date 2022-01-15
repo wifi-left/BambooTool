@@ -29,8 +29,8 @@ jobs:
     - name: Upload file
       uses: actions/upload-artifact@v2
       with:
-        name: packs
+        name: build
         path: |
-          packs/*7z # 7z 安装包
-          packs/*exe # window 安装包
+          build/*7z # 7z 安装包
+          build/*exe # window 安装包
 
