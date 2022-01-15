@@ -1,0 +1,42 @@
+name: Bug 反馈
+description: 反馈 BUG。
+body:
+  - type: markdown
+    attributes:
+      value: |
+        请提供详细的描述方便寻找到您反映的问题。
+  - type: input
+    id: version
+    attributes:
+      label: 使用的版本
+      description: 请输入您所使用的的程序版本。
+      placeholder: 例如：1.0.1
+    validations:
+      required: true
+  - type: input
+    id: platform
+    attributes:
+      label: 平台
+      description: 请输入您遇到 BUG 的平台。
+      placeholder: 例如：Windows 7 专业版 x64
+    validations:
+      required: false
+  - type: textarea
+    id: program-infomation
+    attributes:
+      label: 详细版本信息
+      description: 请输入/截图设置页面的版本信息。
+      placeholder: 请输入/截图设置页面的版本信息。
+    validations:
+      required: true
+  - type: textarea
+    id: crash-infomation
+    attributes:
+      label: 调试信息
+      description: 您可以使用命令行启动程序，获得 Node.js 日志。在主界面打开 F12 即可查看界面调试信息。
+  - type: textarea
+    id: bug-report
+    attributes:
+      label: 更详细的描述
+      description: 请尽可能地详细描述问题，特别是您是怎么遇到这个 BUG 的。
+
