@@ -13,10 +13,10 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
-
     strategy:
       matrix:
         node-version: [16.9.1]
+        os: [macos-latest, ubuntu-latest, windows-latest]
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
     steps:
@@ -28,7 +28,6 @@ jobs:
         cache: 'npm'
     - run: npm install -g electron-builder
     - run: npm build
-    
     - name: Upload file
       uses: actions/upload-artifact@v2
       with:
