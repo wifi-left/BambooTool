@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<title>Bamboo File Tools</title>
+	<link href="./index.css" rel="stylesheet">
+	<style>
+
+	</style>
+</head>
+
+<body>
+
+	<div id="bg">
+
+		<div id="leftbar">
+			<div id="iconbar">
+
+			</div>
+			<div id="icontitle">
+
+			</div>
+			<div id="selectBar">
+
+			</div>
+			<div id="barlist">
+				<div onclick="showPage(this);" id="main" class="barlist barlist-hover">
+
+				</div>
+				<div onclick="showPage(this);" id="upload" class="barlist">
+
+				</div>
+				<div onclick="showPage(this);" id="setting" class="barlist">
+
+				</div>
+
+			</div>
+
+		</div>
+		<div id="content">
+			<div id="errorPage" class="page">
+				<div class="Mcenter">
+					<h1>Ooops! 程序出错了！</h1>
+					<p>请等待修复。</p>
+					<!-- <a class="buttona" onclick="showError(this);" id="showerror" style="display: none;">显示更多 ></a>
+                    <div class="canCopy" id="errormsg" style="display: none;"></div> -->
+				</div>
+
+			</div>
+			<div id="pupload" class="page">
+				<div id="leftpart">
+					<div id="qrcode"></div>
+					<div id="qrtext">
+						<span>请扫描上方二维码传输文件。<br />若无法打开，请确保与主机处于同一网络。您可以尝试下方的 IP 地址（本机IP）。</span><br />
+						<select id="ipselect" onchange="changeIPEvent(this);">
+							<option>a</option>
+							<option>b</option>
+							<option>c</option>
+
+						</select><br />
+						<a id="localIp" href="">打开文件上传界面</a><br/>
+						<span id="pswshow"></span>
+					</div>
+
+
+				</div>
+				<div id="rightpart">
+					<button class="button" onclick="flushFiles();">
+						刷新文件列表
+					</button><br />
+					<span>文件刷新频率约为 5 秒一次</span>
+					<div id="filelist">
+
+					</div>
+				</div>
+			</div>
+			<div id="pmain" class="page" style="display:inline-block;">
+				<div style="text-align: center; width:80%" class="Mcenter">
+					<div style="width:128px;height:128px;" class="icon">
+
+					</div>
+					<h1>Bamboo File Tools</h1>
+					<span>点击左侧快捷导航栏开始使用</span>
+				</div>
+			</div>
+			<div id="psetting" class="page">
+				<h1>
+					<div class="img ssetting" style="vertical-align:middle;display:inline-block"></div>设置
+					<div class="hr"></div>
+				</h1>
+
+				<div class="hr"></div>
+				<h1>关于</h1>
+
+				当前版本：
+				<script>
+					var infom = program.getinfo();
+					document.write(infom.package.version);
+				</script>
+				<br />
+				作者：
+				<script>
+
+					document.write(infom.package.author);
+				</script>
+				<br />
+				<div class="hr2"></div>
+				Node.js 版本：
+				<script>
+
+					document.write(infom.process.node);
+				</script>
+				<br />
+				Electron 版本：
+				<script>
+
+					document.write(infom.process.electron);
+				</script>
+				<br />
+				Chromium 版本：
+				<script>
+
+					document.write(infom.process.chrome);
+				</script>
+				<br />
+
+			</div>
+
+		</div>
+	</div>
+	<div id="messagebox"></div>
+	<div id="alertBox">
+
+	</div>
+	<!-- <div class="alertBox c-prompt">
+
+        </div>
+        <div class="alertBox c-alert">
+
+        </div> -->
+	</div>
+	<script src="../lib/gquery.js">
+
+	</script>
+	<script src="index.js">
+
+	</script>
+	<script>
+
+	</script>
+</body>
+
+</html>

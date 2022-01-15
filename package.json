@@ -1,0 +1,71 @@
+{
+    "name": "bambootool",
+    "version": "1.0.1",
+    "description": "Bamboo Tool",
+    "main": "index.js",
+    "scripts": {
+        "test": "electron ."
+    },
+    "author": "Gamom",
+    "license": "ISC",
+    "build": {
+        "asar": true,
+        "extraResources": {
+            "from": "./res",
+            "to": "../res"
+        },
+        "electronDownload": {
+            "mirror": "https://npm.taobao.org/mirrors/electron/"
+        },
+        "electronVersion": "16.0.5",
+        "productName": "BambooTool",
+        "appId": "gamom.bambootool",
+        "copyright": "Bamboo Tool",
+        "directories": {
+            "output": "./build"
+        },
+        "win": {
+            "icon": "res/img/iconout.ico",
+            "target": [
+                {
+                    "target": "7z",
+                    "arch": [
+                        "x64",
+                        "ia32"
+                    ]
+                },
+                {
+                    "target": "nsis",
+                    "arch": [
+                        "x64",
+                        "ia32"
+                    ]
+                }
+            ]
+        },
+        "nsis": {
+            "oneClick": false,
+            "guid": "BambooMusic",
+            "perMachine": true,
+            "allowElevation": true,
+            "allowToChangeInstallationDirectory": true,
+            "createDesktopShortcut": true,
+            "createStartMenuShortcut": true,
+            "shortcutName": "Bamboo Tool",
+            "displayLanguageSelector": true,
+            "include": "installer.nsh"
+        }
+    },
+    "dependencies": {
+        "express": "^4.17.2",
+        "fluent-ffmpeg": "^2.1.2",
+        "fs": "^0.0.1-security",
+        "iconv-lite": "^0.6.3",
+        "node-fetch": "2.0.0",
+        "open": "^8.4.0",
+        "path": "^0.12.7",
+        "progress-stream": "^2.0.0",
+        "qr-image": "^3.2.0",
+        "request": "^2.88.2"
+    }
+}

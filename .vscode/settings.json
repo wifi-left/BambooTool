@@ -1,0 +1,9 @@
+{
+    "files.associations": {
+        "*.html": "html",
+        "*.htm": "htm",
+        "*.php": "php",
+        "*.pg": "markdown",
+        "xstring": "cpp"
+    }
+}
