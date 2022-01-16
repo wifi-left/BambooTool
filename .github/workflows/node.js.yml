@@ -8,15 +8,13 @@ on:
     branches: [ master ]
   pull_request:
     branches: [ master ]
-
 jobs:
   build:
 
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     strategy:
       matrix:
         node-version: [16.9.1]
-        os: [macos-latest, ubuntu-latest, windows-latest]
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
     steps:
@@ -27,12 +25,12 @@ jobs:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
     - run: npm install -g electron-builder
-    - run: npm build
+    - run: npm run build
+    - run: ls ./build
     - name: Upload file
       uses: actions/upload-artifact@v2
       with:
-        name: packs
+        name: Bamboo Tool Nightly Version
         path: |
-          packs/*7z # 7z 安装包
-          packs/*exe # window 安装包
+          ./build/*.*
 
