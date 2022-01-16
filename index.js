@@ -12,7 +12,13 @@ const downloadzip = require("./lib/downloadzip.js");
 const os = require('os');
 var interfaces = os.networkInterfaces();
 var IPv4 = [];
-
+const gotTheLock = app.requestSingleInstanceLock()
+if (!gotTheLock) {
+    const Message = "WARN: 程序已经启动！";
+    console.log(Message);
+    app.quit(); //防止重复启动
+    return;
+}
 var hostIp = function () {
     if (process.platform === 'darwin') {
         for (var i = 0; i < interfaces.en0.length; i++) {
@@ -155,7 +161,7 @@ function createWindow() {
         }
 
     ];
-    appTray.setContextMenu(Menu.buildFromTemplate(programtemple))
+    appTray.setContextMenu(Menu.buildFromTemplate(programtemple));
     win.on('close', (event) => {
         if (!canQuit) {
             event.preventDefault();
@@ -176,6 +182,17 @@ function createWindow() {
             win.hide();
         else win.show();
     };
+    app.on('second-instance', (event, commandLine, workingDirectory) => {
+        // 当运行第二个实例时,将会聚焦到mainWindow这个窗口
+        if (win) {
+            if (win.isMinimized()) win.restore()
+            win.focus()
+            win.show()
+        }
+    })
+    // 创建 myWindow, 加载应用的其余部分, etc...
+    // app.on('ready', () => {
+    // })
 
 }
 app.whenReady().then(() => {
@@ -287,7 +304,7 @@ function randomPassword(size) {
 }
 var fileUpdated = false;
 
-ipcMain.on('getupdate',(event,arg)=>{
+ipcMain.on('getupdate', (event, arg) => {
     event.returnValue = fileUpdated;
     fileUpdated = false;
 });
@@ -304,7 +321,7 @@ log(`IP: `);
 for (var i = 0; i < IPv4.length; i++) {
     var ip = IPv4[i];
     console.log(`${ip}:${port}`);
-    mkQrcode(`http://${ip}:${port}/checkNoRes?psw=${password}`,ip.replaceAll("/", "_").replaceAll(".", "_").replaceAll(":", "_"));
+    mkQrcode(`http://${ip}:${port}/checkNoRes?psw=${password}`, ip.replaceAll("/", "_").replaceAll(".", "_").replaceAll(":", "_"));
 }
 
 // Node使用'on'方法注册事件处理程序
@@ -331,11 +348,11 @@ server.on('request', function (request, response) {
             response.writeHead(200, { 'Content-type': "text/json; charset=UTF-8" });
             if (cookie["psw"] != password) {
                 response.write(`{"state":"Failed"}`);
-            }else{
+            } else {
                 response.write(`{"state":"OK"}`);
             }
             response.end();
-            
+
 
             break;
 
@@ -400,7 +417,7 @@ server.on('request', function (request, response) {
             response.writeHead(200, { 'Content-type': "text/html; charset=UTF-8" });
 
             var _fileName = request.headers['file-name'];
-            if(process.platform == 'win32'){
+            if (process.platform == 'win32') {
                 _fileName = decodeURIComponent(_fileName);
             }
             log("Recieveing " + _fileName);
