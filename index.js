@@ -12,6 +12,7 @@ const downloadzip = require("./lib/downloadzip.js");
 const os = require('os');
 var interfaces = os.networkInterfaces();
 var IPv4 = [];
+var recievedFiles = [];
 const gotTheLock = app.requestSingleInstanceLock()
 if (!gotTheLock) {
     const Message = "WARN: 程序已经启动！";
@@ -275,7 +276,11 @@ ipcMain.on("openeditmenu", (event, arg) => {
 
 
 function mkQrcode(URL, name) {
-
+    try{
+        fs.mkdirSync('./res/http/qr');
+    }catch(e){
+        //console.warn(e);
+    }
     var userStr = URL;
     // 生成二维码文件流
     var qr_svg = qrCreate.image(userStr, { ec_level: "M", type: "svg" });
@@ -308,6 +313,11 @@ ipcMain.on('getupdate', (event, arg) => {
     event.returnValue = fileUpdated;
     fileUpdated = false;
 });
+ipcMain.on('getupdatefiles', (event, arg) => {
+    event.returnValue = recievedFiles;
+    // fileUpdated = false;
+});
+
 var password = randomPassword(7);
 
 var server = new http.Server();    // 创建新的HTTP服务器
@@ -340,6 +350,7 @@ server.on('request', function (request, response) {
         var parts = Cookie.split('=');
         cookie[parts[0].trim()] = (parts[1] || '').trim();
     });
+
     switch (url.pathname) {
         case '/state':
             response.setHeader('Access-Control-Allow-Origin', '*');
@@ -352,7 +363,6 @@ server.on('request', function (request, response) {
                 response.write(`{"state":"OK"}`);
             }
             response.end();
-
 
             break;
 
@@ -422,7 +432,7 @@ server.on('request', function (request, response) {
             }
             log("Recieveing " + _fileName);
             if (_fileName == undefined || _fileName == null) {
-                response.write("Error Undefined File!")
+                response.write("Error: Undefined File!")
                 response.end();
             }
             else {
@@ -436,8 +446,9 @@ server.on('request', function (request, response) {
                 } catch (e) {
 
                 }
-                var fis = fs.createWriteStream("./res/http/files/" + _fileName);
-
+                var savePath = "./res/http/files/" + _fileName;
+                var fis = fs.createWriteStream(savePath);
+                var fileName = _fileName;
                 request.on('data', function (data) {
                     // 大文件
                     try {
@@ -447,13 +458,14 @@ server.on('request', function (request, response) {
                         log(`ERROR: ${e}`);
                         // response.writeHead
                         response.writeHead(500, { 'Content-type': 'text/plain; charset=UTF-8' });
-                        response.write("出错！" + e.message);
+                        response.write(JSON.stringify("错误：" + e.message));
 
                     }
 
                 });
                 request.on("close", () => {
-                    log("Recieved!");
+                    log(`Recieved ${fileName}!`);
+                    recievedFiles[recievedFiles.length] = { name: fileName, path: savePath, ext: path.extname(fileName) };
                     fileUpdated = true;
                     fis.end();
                     response.end();

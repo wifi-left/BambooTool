@@ -501,54 +501,62 @@ function flushIps() {
 }
 var Lastres = [];
 function flushFiless() {
-    var menu = "./res/http/files";
-    var res = program.listFiles(menu, true, false);
-    var sk = res;
-    var l = 0;
-    for (var i = 0; i - l < res.length; i++) {
-        var flag = false;
-        for (var j = 0; j < Lastres.length; j++) {
-            if (res[i - l].name == Lastres[j].name) {
-                flag = true;
-                break;
-            }
-        }
-        if (flag) {
-            res.splice(i - l, 1);
-            l++;
-        }
-    }
-    // console.log(Lastres);
-    Lastres = sk;
-    var out = '';
-    res.forEach((dat) => {
-        var code = `<a href='${menu}/${dat.name}'>${dat.name}</a><br/>`;
-        out += code;
-    });
-    document.getElementById("filelist").innerHTML = out + document.getElementById("filelist").innerHTML;
+    // var menu = "./res/http/files";
+    // var res = program.listFiles(menu, true, false);
+    // var sk = res;
+    // var l = 0;
+    // for (var i = 0; i - l < res.length; i++) {
+    //     var flag = false;
+    //     for (var j = 0; j < Lastres.length; j++) {
+    //         if (res[i - l].name == Lastres[j].name) {
+    //             flag = true;
+    //             break;
+    //         }
+    //     }
+    //     if (flag) {
+    //         res.splice(i - l, 1);
+    //         l++;
+    //     }
+    // }
+    // // console.log(Lastres);
+    // Lastres = sk;
+    // var out = '';
+    // var res = program.getFiles();
+    // res.forEach((dat) => {
+    //     var code = `<a href='${dat.path}'>${dat.name}</a><br/>`;
+    //     out = code + out;
+    // });
+    // document.getElementById("filelist").innerHTML = out;
 
-    reLinkOpen();
+    // reLinkOpen();
+    flushFiles();
 }
 function flushFiles() {
-    var menu = "./res/http/files";
-    var res = program.listFiles(menu, true, false);
-    Lastres = res;
+    // var menu = "./res/http/files";
+    // var res = program.listFiles(menu, true, false);
+    // Lastres = res;
+    // var out = '';
+    // res.forEach((dat) => {
+    //     var code = `<a href='${menu}/${dat.name}'>${dat.name}</a><br/>`;
+    //     out += code;
+    // });
     var out = '';
+    var res = program.getFiles();
+    var i = res.length;
     res.forEach((dat) => {
-        var code = `<a href='${menu}/${dat.name}'>${dat.name}</a><br/>`;
-        out += code;
+        var code = `<div class='file-item'><a href='${dat.path}'><span class='sort-number'>${i--}</span>${dat.name}</a></div>`;
+        out = code + out;
     });
     document.getElementById("filelist").innerHTML = out;
-
     reLinkOpen();
 }
 flushFiles();
 setInterval(() => {
     if (program.isUpdated()) {
         flushFiless();
-        showMsg("上传成功！","ok");
+        showMsg("文件接收成功！","ok");
     };
-}, 5000);
+}, 3000);
 
 reLinkOpen();
 function reLinkOpen() {
@@ -557,7 +565,10 @@ function reLinkOpen() {
         if (link.href != '#' && link.href != '' && link.href != null && link.href != undefined) {
             link.onclick = (e) => {
                 e.preventDefault();
+                showMsg("正在打开文件 / 链接","info");
                 openUrlInB(link.getAttribute('href'));
+                showMsg("打开文件 / 链接","ok");
+
             }
         }
     });

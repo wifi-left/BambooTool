@@ -39,7 +39,7 @@
         },
         "nsis": {
             "oneClick": false,
-            "guid": "BambooMusic",
+            "guid": "BambooTool",
             "perMachine": true,
             "allowElevation": true,
             "allowToChangeInstallationDirectory": true,

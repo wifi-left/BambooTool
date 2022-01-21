@@ -1,0 +1,220 @@
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>抽号器</title>
+    <link rel="stylesheet" type="text/css">
+    <script src="js/gquery.js"></script>
+    <style>
+        * {
+            transition: 0.5s;
+        }
+
+        body {
+            overflow: hidden;
+        }
+
+        #lists {
+            transition: 3s;
+            position: absolute;
+            left: -100%;
+            width: auto;
+            overflow: hidden;
+            display: none;
+            top: 2em;
+            white-space: nowrap;
+            left:100%;
+        }
+
+        #bg {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            background: url("img/bg.jpg");
+        }
+
+        #canvas {
+            width: calc(100% - 0px);
+            height: calc(100% - 0px);
+            position: absolute;
+            left: 0px;
+            top: 0px;
+        }
+
+        .windows {
+            z-index: 10;
+            background: rgba(10, 10, 10, 0.5);
+        }
+
+        #result {
+            user-select: none;
+            display: inline-block;
+            position: absolute;
+            top: 0px;
+            left: 0px;
+            width: 100%;
+            height: 100%;
+            background: rgba(100, 100, 100, 0.5);
+            color: #f3f3f3;
+            text-align: center;
+            padding-top: 2em;
+            z-index: 100;
+        }
+
+        #show {
+            color: white;
+        }
+
+        #startrandom {
+            width: 300px;
+            height: 300px;
+            font-size: 36px;
+        }
+
+        .lis {
+            width: 150px;
+            height: 150px;
+            font-size: 36px;
+            display: inline-block;
+            border-radius: 0px;
+            border: 4px solid #333333;
+            border-radius: 8px;
+            margin: 8px 8px 8px 8px;
+            background-color: rgb(73, 204, 61);
+            color: white;
+            user-select: none;
+            
+        }
+
+        h1 {
+            color: white;
+        }
+
+        p {
+            color: white;
+        }
+
+        #luck {
+            font-size: 48px;
+            /* background-color: rgb(58, 175, 58); */
+            /* width:  */
+        }
+
+        .Mcenters {
+            /* position: absolute; */
+            line-height: 150px;
+            text-align: center;
+        }
+
+        .Mcenter {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translateY(-50%) translateX(-50%);
+            transition: 200ms;
+        }
+        
+        .selected{
+            width:300px;
+            height:300px;
+            border:4px solid red;
+            font-size:48px;
+            line-height: 300px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="bg" class="bg" style="background:black;">
+        <div id="result" onclick="get_random(result);">
+            <div class="Mcenter">
+                <h1>点击屏幕开始抽奖</h1>
+                <div id="show"></div>
+            </div>
+
+            <br />
+            <!-- <input class="button-green" type="button" value="点击抽奖" id="startrandom" onclick="get_random(result);" /> -->
+        </div>
+        <div id="lists">
+
+        </div>
+    </div>
+
+</body>
+<script>
+    var result = document.getElementById("result");
+    var show = document.getElementById("show");
+    var lis = document.getElementById("lists");
+    init();
+    var count = 60;
+    function init() {
+        var tmp = "";
+        for (var i = 1; i <= count; i++) {
+            tmp = tmp + "<div class='lis button-blue Mcenters' style='background-color:"+getranColor()+";' id='number-" + i + "'><span class=''>" + i + "</span></div>";
+        }
+        lis.innerHTML = tmp;
+        // lis.style.left = "-100%";
+    }
+    function $_random(number) {
+        init();
+        var number = parseInt(number) % count + 1;
+        var obj = result;
+        obj.style.top = "calc(-100% - 100px)";
+        setTimeout(() => {
+            obj.style.display = "none";
+            lis.style.display = "inline-block";
+            setTimeout(() => {
+                lis.style.left = -(number) * 158 + 180 + "px";
+                setTimeout(() => {
+                    doit(number);
+                }, 3500);
+            }, 100);
+
+
+        }, 500);
+    }
+    function get_random(obj) {
+        init();
+        var number = parseInt(Math.random() * 180 + 1) % 60 + 1;
+        obj.style.top = "calc(-100% - 100px)";
+        setTimeout(() => {
+            obj.style.display = "none";
+            lis.style.display = "inline-block";
+            setTimeout(() => {
+                lis.style.left = -(number) * 164 + 180 + "px";
+                setTimeout(() => {
+                    doit(number);
+                }, 3500);
+            }, 100);
+
+
+        }, 500);
+    }
+    function getranColor() {
+        var tmp = "#";
+        var zm = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "a", "b", "c", "d", "e", "f", "0", "1"];
+        for (var j = 0; j < 6; j++)
+            tmp += zm[parseInt(Math.random() * 17 + 0)];
+        return tmp;
+    }
+    function doit(number) {
+        var shonum = document.getElementById("number-" + number);
+        shonum.style.backgroundColor = getranColor();
+        shonum.classList.add('selected');
+        setTimeout(() => {
+            //shonum.left = "calc(50% - 75px)";
+            //shonum.top = "calc(50% - 75px)";
+            result.style.display = "inline-block";
+            setTimeout(() => {
+                result.style.top = "0px";
+                show.innerHTML = "<div class='button-blue' id='luck'><p><b>幸运号码</b></p>" + number + "</div>";
+            }, 500);
+
+        }, 500);
+    }
+</script>
+
+</html>

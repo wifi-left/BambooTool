@@ -10,9 +10,11 @@ var ipsinfo = (ipcRenderer.sendSync("getserverinfo", "s"));
 const fs = require('fs');
 const path = require('path');
 function getInfoFromMain() {
-    return ipcRenderer.sendSync("getupdate", "")
+    return ipcRenderer.sendSync("getupdate", "");
 }
-
+function getFiles() {
+    return ipcRenderer.sendSync("getupdatefiles", "");
+}
 
 var msgID = 0;
 function showMsg(val, type) { //Type: info error warn ok
@@ -207,6 +209,7 @@ function useExample(exampleName) {
 }
 contextBridge.exposeInMainWorld('program', {
     ip: ipsinfo,
+    getFiles: () => { return getFiles() },
     hadFile: (filename) => {
         return fs.existsSync(filename);
     }, isUpdated: () => {

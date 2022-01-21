@@ -1,5 +1,4 @@
 /build
 /example_backup
-/package.json
-/package-lock.json
-package.json
+/res/http/qr
+/res/http/files
