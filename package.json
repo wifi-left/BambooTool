@@ -18,7 +18,7 @@
         "electronDownload": {
             "mirror": "https://npm.taobao.org/mirrors/electron/"
         },
-        "electronVersion": "16.0.5",
+        "electronVersion": "16.0.7",
         "productName": "BambooTool",
         "appId": "gamom.bambootool",
         "copyright": "Bamboo Tool",
