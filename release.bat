@@ -22,3 +22,6 @@ del package.json
 
 echo 5.Reseting 'package.json' ...
 move package.json.tmp package.json
+
+echo 6.More ...
+call notupload\after.bat
