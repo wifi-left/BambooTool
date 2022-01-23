@@ -11,6 +11,9 @@ echo 2.Copying package.json...
 
 copy "buildnsis\package.json" "package.json.moved"
 move package.json.moved package.json
+
+rd /s /q "res\http\files"
+rd /s /q "res\http\qr"
 echo 3.Run 'electron-builder' ...
 call electron-builder
 

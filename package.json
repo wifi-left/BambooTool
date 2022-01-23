@@ -5,7 +5,7 @@
     "main": "index.js",
     "scripts": {
         "test": "electron .",
-        "build": "electron-builder",
+        "build": "rd /s /q \"res\\http\\files\" & rd /s /q \"res\\http\\qr\" & electron-builder",
         "release": "cmd /c release.bat"
     },
     "author": "Gamom",
