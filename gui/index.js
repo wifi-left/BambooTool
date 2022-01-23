@@ -482,8 +482,9 @@ function changeIP(IPAddress) {
     if (IPAddress == '' || IPAddress == null) {
         IPAddress = "127.0.0.1";
     }
+    // $.cookie.set('psw',`${program.ip.password}`);
     document.getElementById("localIp").href = `http://${IPAddress || "127.0.0.1"}:${program.ip.port}/checkNoRes?psw=${program.ip.password}`;
-    document.getElementById("qrcode").style.backgroundImage = `url("http://${IPAddress || "127.0.0.1"}:${program.ip.port}/qr/${IPAddress.replaceAll(":", "_").replaceAll(".", "_")}_qr.png")`;
+    document.getElementById("qrcode").style.backgroundImage = `url("http://${IPAddress || "127.0.0.1"}:${program.ip.port}/qr/${IPAddress.replaceAll(":", "_").replaceAll(".", "_")}_qr.png?oncepsw=${program.ip.password}")`;
 }
 flushIps();
 function changeIPEvent(ele) {

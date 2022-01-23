@@ -16,7 +16,7 @@
             "to": "../res"
         },
         
-        "electronVersion": "16.0.7",
+        "electronVersion": "16.0.6",
         "productName": "BambooTool",
         "appId": "gamom.bambootool",
         "copyright": "Bamboo Tool",

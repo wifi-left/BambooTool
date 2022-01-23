@@ -276,9 +276,9 @@ ipcMain.on("openeditmenu", (event, arg) => {
 
 
 function mkQrcode(URL, name) {
-    try{
+    try {
         fs.mkdirSync('./res/http/qr');
-    }catch(e){
+    } catch (e) {
         //console.warn(e);
     }
     var userStr = URL;
@@ -490,15 +490,32 @@ server.on('request', function (request, response) {
                 response.end();
                 break;
             } else {
+                if (url.pathname == '/check.html') {
+                    var filename = "./res/http/" + (filename || url.pathname.substring(1));  // 去掉前导'/'
+
+                    var content = fs.readFileSync(filename);
+                    response.writeHead(200, { 'Content-type': 'text/html; charset=UTF-8' });
+                    response.write(content); // 把文件内容作为响应主体
+                    response.end();
+                }
 
             }
+
+            break;
         default:
+            if (getdatas.oncepsw != password && url.pathname.substring(0, '/qr'.length) == '/qr')
+                if (cookie["psw"] != password) {
+                    // console.log("s")
+                    response.writeHead(302, { 'Location': 'check.html' });
+                    response.end();
+                    break;
+                }
             try {
                 filename = "./res/http/" + (filename || url.pathname.substring(1));  // 去掉前导'/'
 
             } catch (e) {
-                response.writeHead(404, { 'Content-type': 'text/plain; charset=UTF-8' });
-                response.write("出错！" + err.message);
+                response.writeHead(500, { 'Content-type': 'text/html; charset=UTF-8' });
+                response.write(`{"stat":false,"msg":"<html><head><title>Bamboo Tool - Error!</title><meta http-equiv='Content-Type'content='text/html; charset=UTF-8'><meta name='viewport'content='width=device-width, initial-scale=1'><style>*{transition:100ms}html,body{padding:none;user-select:none;transition:100ms}.center-title{font-family:'console';position:absolute;top:50%;left:50%;transform:translateY(-50%)translateX(-50%)}.top-center{position:absolute;top:50%;transform:translateY(-50%)}.alc{text-align:center}#error{text-align:left}#erbg{width:100%;height:35%;max-height:330px;min-height:150px;background-color:rgba(255,255,255,0.466)}#backg{position:absolute;left:0px;top:0px;width:100%;height:100%;background-image:linear-gradient(120deg,rgb(235,206,169),rgb(218,138,63))}.iline{display:inline-block}</style></head><body><div id='backg'><div class='top-center'id='erbg'></div><div class='center-title'id='error'><div class='ilne'><h1>Error Code: 500</h1><p style='font-size: 18px;'> The Page Has Problems:<br/>${e.message}<br/>Please Wait for fixing.</p></div></div></div></body></html>"}`);
                 response.end();
                 return;
 
@@ -529,7 +546,8 @@ server.on('request', function (request, response) {
                 response.writeHead(200, { 'Content-type': type });
                 response.write(content); // 把文件内容作为响应主体
             } catch (e) {
-                response.writeHead(404, { 'Content-type': 'text/plain; charset=UTF-8' });
+                response.writeHead(404, { 'Content-type': 'text/html; charset=UTF-8' });
+                response.write(`<html><head><title>Bamboo Tool - Not Found</title><meta http-equiv="Content-Type"content="text/html; charset=UTF-8"><meta name="viewport"content="width=device-width, initial-scale=1"><style>*{transition:100ms}html,body{padding:none;user-select:none;transition:100ms}.center-title{font-family:"console";position:absolute;top:50%;left:50%;transform:translateY(-50%)translateX(-50%)}.top-center{position:absolute;top:50%;transform:translateY(-50%)}.alc{text-align:center}#error{text-align:left}#erbg{width:100%;height:35%;max-height:330px;min-height:150px;background-color:rgba(255,255,255,0.466)}#backg{position:absolute;left:0px;top:0px;width:100%;height:100%;background-image:linear-gradient(120deg,rgb(180,233,230),rgb(63,218,132))}.iline{display:inline-block}</style></head><body><div id="backg"><div class="top-center"id="erbg"></div><div class="center-title"id="error"><div class='ilne'><h1>Error Code: 404</h1><p style="font-size:18px;">Could not found '${url.pathname}'.</p></div></div></div><script></script></body></html>`);
                 response.write("出错！" + e.message);
             }
             response.end();
