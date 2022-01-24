@@ -1,0 +1,10 @@
+{
+    "version": "1.0.2",
+    "download": {
+        "updatePack":"https://github.com/wifi-left/BambooTool/releases/download/1.0.2/UpdatePack.7z",
+        "win64":"https://github.com/wifi-left/BambooTool/releases/download/1.0.2/BambooTool-1.0.2-win.7z",
+        "win32":"https://github.com/wifi-left/BambooTool/releases/download/1.0.2/BambooTool-1.0.2-ia32-win.7z"
+    },
+    "type": "important",
+    "canUseUpdatePack": "1.0.2"
+}
